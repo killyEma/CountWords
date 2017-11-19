@@ -9,7 +9,9 @@ public enum InvalidInput {
 	AND( " and ", "And"),
 	OF(" of ", " Of "),
 	BE(" be ", " Be "),
-	AS(" as ", " As ");
+	AS(" as ", " As "),
+	ALSO(" also ", " Also"),
+	IN(" in ", " In ");
 	
 	String first;
 	String second;

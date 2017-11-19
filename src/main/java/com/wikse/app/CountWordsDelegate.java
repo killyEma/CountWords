@@ -7,6 +7,7 @@ import java.util.List;
 import org.jibx.schema.codegen.extend.NameConverter;
 
 public class CountWordsDelegate {
+	private static final String DEFAULT_PARAGRAPH_INDEX = "0";
 	private static final String DOT_REGEX = "\\.";
 	private static final String DIVIDER_REGEX = "\\s+";
 
@@ -56,7 +57,11 @@ public class CountWordsDelegate {
 			
 			if (word.equals(pluralWord)) {
 				wordCountRepeted++;
-				sentenceIndexes.add(getParagraphNumber(indexWord, indexDots));
+				
+				String sIndex = getParagraphStringNumber(indexWord, indexDots);
+				if (!isIndexPresentInList(sentenceIndexes, sIndex)) {
+					sentenceIndexes.add(sIndex);
+				}
 			}
 		}
 		word = nameTools.depluralize(word);
@@ -74,10 +79,21 @@ public class CountWordsDelegate {
 			
 			if (areTheSameWords(specialWord, nextWord)) {
 				wordCountRepeted++;
-				sentenceIndexes.add(getParagraphNumber(indexWord, indexDots));
+				
+				String sIndex = getParagraphStringNumber(indexWord, indexDots);
+				if (!isIndexPresentInList(sentenceIndexes, sIndex)) {
+					sentenceIndexes.add(sIndex);
+				}
 			}
 		}
 		return new WordCount(word, wordCountRepeted, sentenceIndexes);
+	}
+
+	private boolean isIndexPresentInList(List<String> indexDots, String sIndex) {
+		return indexDots.stream()
+				.filter(index -> index.equals(sIndex))
+				.findFirst()
+				.isPresent();
 	}
 	
 	private boolean areTheSameWords(SpecialWord specialWord, String nextWord) {
@@ -119,13 +135,13 @@ public class CountWordsDelegate {
 		return Arrays.asList(input.toLowerCase().split(DIVIDER_REGEX));
 	}
 
-	private String getParagraphNumber(int indexWord, List<Integer> sentenceIndexes) {
+	private String getParagraphStringNumber(int indexWord, List<Integer> sentenceIndexes) {
 		for (Integer dotIndex : sentenceIndexes) {
 			if(indexWord < dotIndex) {
 				return String.valueOf(sentenceIndexes.indexOf(dotIndex));
 			}
 		}
-		return null;
+		return DEFAULT_PARAGRAPH_INDEX;
 	}
 
 	private List<Integer> findIndexDots(List<String> inputs) {

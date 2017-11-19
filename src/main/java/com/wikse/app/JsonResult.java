@@ -1,8 +1,10 @@
 package com.wikse.app;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class JsonResult {
+public class JsonResult implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private List<WordCount> results;
 	
 	public JsonResult(List<WordCount> results){
@@ -16,4 +18,5 @@ public class JsonResult {
 	public void setWordCounts(List<WordCount> results) {
 		this.results = results;
 	}
+	
 }

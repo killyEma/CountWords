@@ -4,9 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 public class WordCount implements Serializable{
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	private String word;
 	private int count;
@@ -25,6 +23,10 @@ public class WordCount implements Serializable{
 	
 	public String getWord() {
 		return word;
+	}
+	
+	public void setWord(String word) {
+		this.word = word;
 	}
 
 	public List<String> getSentenceIndexes() {
