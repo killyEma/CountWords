@@ -9,5 +9,8 @@ mvn clean <Br>
 mvn compile <Br>
 mvn package <Br>
 mvn exec:java <Br>
+
+Test:
+mvn test
   
 En la consola ingresar el texto
